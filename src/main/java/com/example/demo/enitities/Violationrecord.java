@@ -1,31 +1,23 @@
 package com.example.demo.entity;
 
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
 public class ViolationRecord {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private Long userId;
-private Long policyRuleId;
-private Long eventId;
-private String violationType;
-private String details;
-private String severity;
-private LocalDateTime detectedAt;
-private Boolean resolved;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@PrePersist
-public void onCreate() {
-if (resolved == null) resolved = false;
-detectedAt = LocalDateTime.now();
-}
+    private Long userId;
+    private Long policyRuleId;
+    private Long eventId;
+    private String violationType;
+    private String details;
+    private String severity;
+    private LocalDateTime detectedAt;
+    private Boolean resolved;
 
-
-// getters and setters
+    // getters & setters
 }

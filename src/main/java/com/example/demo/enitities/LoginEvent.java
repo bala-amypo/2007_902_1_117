@@ -1,31 +1,28 @@
 package com.example.demo.entity;
 
-
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
 public class LoginEvent {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private Long userId;
-private String ipAddress;
-private String location;
-private String deviceId;
-private LocalDateTime timestamp;
-private String loginStatus;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-public LoginEvent() {}
+    private Long userId;
+    private String ipAddress;
+    private String location;
+    private String deviceId;
+    private LocalDateTime timestamp;
+    private String loginStatus;
 
+    public LoginEvent() {}
 
-@PrePersist
-public void onCreate() {
-if (timestamp == null) timestamp = LocalDateTime.now();
-}
+    @PrePersist
+    public void prePersist() {
+        if (timestamp == null) timestamp = LocalDateTime.now();
+    }
 
-
-// getters and setters
+    // getters & setters
 }
