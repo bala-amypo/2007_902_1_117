@@ -1,21 +1,27 @@
-package com.example.demo.service;
+package com.service.impl;
 
 import com.example.demo.entity.UserAccount;
+import com.example.demo.service.UserAccountService;
+import org.springframework.stereotype.Service;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.List;
-import java.util.Optional;
+@Service
+public class UserAccountServiceImpl implements UserAccountService {
 
-public interface UserAccountService {
+    private Map<Long, UserAccount> db = new HashMap<>();
+    private Long counter = 1L;
 
-    UserAccount createUser(UserAccount user);
+    @Override
+    public UserAccount createUser(UserAccount user) {
+        user.setId(counter++);
+        user.setStatus("ACTIVE");
+        db.put(user.getId(), user);
+        return user;
+    }
 
-    UserAccount getUserById(Long id);
-
-    UserAccount updateUserStatus(Long id, String status);
-
-    List<UserAccount> getAllUsers();
-
-    Optional<UserAccount> findByUsername(String username);
-
-    boolean validateLogin(String username, String password);
+    @Override
+    public UserAccount getUserById(Long id) {
+        return db.get(id);
+    }
 }
