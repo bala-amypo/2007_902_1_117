@@ -43,7 +43,15 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccount updateUserStatus(Long id, String status) {
         UserAccount user = getUserById(id);
         user.setStatus(status);
-        return repo.save(user);
+        return repo.save(user);   
+
+        +
+
+
+
+
+
+        
     }
 
     @Override
