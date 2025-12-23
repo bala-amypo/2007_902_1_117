@@ -2,42 +2,39 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ViolationRecord;
 import com.example.demo.service.ViolationRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/violations")
+@RequestMapping("/violations")
 public class ViolationRecordController {
 
-    private final ViolationRecordService service;
+    @Autowired
+    private ViolationRecordService service;
 
-    public ViolationRecordController(ViolationRecordService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public ViolationRecord log(@RequestBody ViolationRecord record) {
+    @PostMapping("/log")
+    public ViolationRecord logViolation(@RequestBody ViolationRecord record) {
         return service.logViolation(record);
     }
 
     @GetMapping("/user/{userId}")
-    public List<ViolationRecord> byUser(@PathVariable Long userId) {
+    public List<ViolationRecord> getViolationsByUser(@PathVariable Long userId) {
         return service.getViolationsByUser(userId);
     }
 
-    @PutMapping("/{id}/resolve")
-    public ViolationRecord resolve(@PathVariable Long id) {
+    @PutMapping("/resolve/{id}")
+    public ViolationRecord markResolved(@PathVariable Long id) {
         return service.markResolved(id);
     }
 
     @GetMapping("/unresolved")
-    public List<ViolationRecord> unresolved() {
+    public List<ViolationRecord> getUnresolvedViolations() {
         return service.getUnresolvedViolations();
     }
 
-    @GetMapping
-    public List<ViolationRecord> all() {
+    @GetMapping("/all")
+    public List<ViolationRecord> getAllViolations() {
         return service.getAllViolations();
     }
 }
