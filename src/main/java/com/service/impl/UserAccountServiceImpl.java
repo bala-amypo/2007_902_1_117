@@ -23,4 +23,10 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccount findByUsername(String username) {
         return repository.findByUsername(username).orElse(null);
     }
+
+    @Override
+    public UserAccount getUserById(Long id) {   
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }

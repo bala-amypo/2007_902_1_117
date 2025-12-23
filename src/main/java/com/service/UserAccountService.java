@@ -8,6 +8,8 @@ public interface UserAccountService {
 
     UserAccount findByUsername(String username);
 
+    UserAccount getUserById(Long id);   // ✅ ADD THIS
+
     default UserAccount register(String username, String password) {
         UserAccount user = new UserAccount();
         user.setUsername(username);

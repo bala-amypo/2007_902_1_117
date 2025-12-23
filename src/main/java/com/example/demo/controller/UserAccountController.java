@@ -22,3 +22,8 @@ public class UserAccountController {
         return service.getUserById(id);
     }
 }
+
+@GetMapping("/{id}")
+public UserAccount getUser(@PathVariable Long id) {
+    return service.getUserById(id);
+}
