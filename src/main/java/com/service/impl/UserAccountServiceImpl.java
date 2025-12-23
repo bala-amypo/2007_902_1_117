@@ -7,7 +7,8 @@ import com.example.demo.service.UserAccountService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
@@ -22,13 +23,12 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public UserAccount createUser(UserAccount user) {
-        if (repo.findByUsername(user.getUsername()).isPresent())
-            throw new IllegalArgumentException("Username already exists");
-        if (repo.findByEmail(user.getEmail()).isPresent())
-            throw new IllegalArgumentException("Email already exists");
+        repo.findByUsername(user.getUsername())
+                .ifPresent(u -> { throw new IllegalArgumentException("Username already exists"); });
 
         user.setPassword(encoder.encode(user.getPassword()));
         if (user.getRole() == null) user.setRole("USER");
+        if (user.getStatus() == null) user.setStatus("ACTIVE");
 
         return repo.save(user);
     }
@@ -43,15 +43,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public UserAccount updateUserStatus(Long id, String status) {
         UserAccount user = getUserById(id);
         user.setStatus(status);
-        return repo.save(user);   
-
-        +
-
-
-
-
-
-        
+        return repo.save(user);
     }
 
     @Override
