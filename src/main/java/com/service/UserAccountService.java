@@ -6,20 +6,20 @@ public interface UserAccountService {
 
     UserAccount createUser(UserAccount user);
 
-    UserAccount getUserById(Long id);
+    UserAccount findByUsername(String username);
 
-    // Updated register method to match AuthController
-    default UserAccount register(String username, String email, String password) {
+    default UserAccount register(String username, String password) {
         UserAccount user = new UserAccount();
         user.setUsername(username);
-        user.setEmail(email);  // set email as well
         user.setPassword(password);
         return createUser(user);
     }
 
-    // Add login method
-    default UserAccount login(String email, String password) {
-        // implement logic to find user by email and check password
-        return null;
+    default UserAccount login(String username, String password) {
+        UserAccount user = findByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        throw new RuntimeException("Invalid username or password");
     }
 }
