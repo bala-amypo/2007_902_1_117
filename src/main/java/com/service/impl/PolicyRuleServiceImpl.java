@@ -12,25 +12,20 @@ import java.util.Optional;
 @Service
 public class PolicyRuleServiceImpl implements PolicyRuleService {
 
-    private final PolicyRuleRepository repo;
+    private final PolicyRuleRepository ruleRepo;
 
-    public PolicyRuleServiceImpl(PolicyRuleRepository repo) {
-        this.repo = repo;
+    public PolicyRuleServiceImpl(PolicyRuleRepository ruleRepo) {
+        this.ruleRepo = ruleRepo;
     }
 
     @Override
     public PolicyRule createRule(PolicyRule rule) {
-        repo.findAll().stream()
-                .filter(r -> r.getRuleCode().equals(rule.getRuleCode()))
-                .findAny()
-                .ifPresent(r -> { throw new IllegalArgumentException("Rule code already exists"); });
-
-        return repo.save(rule);
+        return ruleRepo.save(rule);
     }
 
     @Override
     public PolicyRule updateRule(Long id, PolicyRule updated) {
-        PolicyRule rule = repo.findById(id)
+        PolicyRule rule = ruleRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rule not found"));
 
         rule.setDescription(updated.getDescription());
@@ -38,23 +33,23 @@ public class PolicyRuleServiceImpl implements PolicyRuleService {
         rule.setConditionsJson(updated.getConditionsJson());
         rule.setActive(updated.getActive());
 
-        return repo.save(rule);
+        return ruleRepo.save(rule);
     }
 
     @Override
     public List<PolicyRule> getActiveRules() {
-        return repo.findByActiveTrue();
+        return ruleRepo.findByActiveTrue();
     }
 
     @Override
     public Optional<PolicyRule> getRuleByCode(String ruleCode) {
-        return repo.findAll().stream()
+        return ruleRepo.findAll().stream()
                 .filter(r -> r.getRuleCode().equals(ruleCode))
                 .findFirst();
     }
 
     @Override
     public List<PolicyRule> getAllRules() {
-        return repo.findAll();
+        return ruleRepo.findAll();
     }
 }

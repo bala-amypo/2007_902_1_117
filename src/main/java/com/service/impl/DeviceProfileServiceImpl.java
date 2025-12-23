@@ -13,39 +13,35 @@ import java.util.Optional;
 @Service
 public class DeviceProfileServiceImpl implements DeviceProfileService {
 
-    private final DeviceProfileRepository repo;
+    private final DeviceProfileRepository deviceRepo;
 
-    public DeviceProfileServiceImpl(DeviceProfileRepository repo) {
-        this.repo = repo;
+    public DeviceProfileServiceImpl(DeviceProfileRepository deviceRepo) {
+        this.deviceRepo = deviceRepo;
     }
 
     @Override
     public DeviceProfile registerDevice(DeviceProfile device) {
-        repo.findByDeviceId(device.getDeviceId())
-                .ifPresent(d -> { throw new IllegalArgumentException("Device already registered"); });
-
         device.setLastSeen(LocalDateTime.now());
-        return repo.save(device);
+        return deviceRepo.save(device);
     }
 
     @Override
     public DeviceProfile updateTrustStatus(Long id, boolean trust) {
-        DeviceProfile device = repo.findById(id)
+        DeviceProfile device = deviceRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Device not found"));
 
-        device.setIsTrusted(trust);
+        device.setTrusted(trust);
         device.setLastSeen(LocalDateTime.now());
-
-        return repo.save(device);
+        return deviceRepo.save(device);
     }
 
     @Override
     public List<DeviceProfile> getDevicesByUser(Long userId) {
-        return repo.findByUserId(userId);
+        return deviceRepo.findByUserId(userId);
     }
 
     @Override
     public Optional<DeviceProfile> findByDeviceId(String deviceId) {
-        return repo.findByDeviceId(deviceId);
+        return deviceRepo.findByDeviceId(deviceId);
     }
 }
