@@ -14,6 +14,6 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("IT Policy Violation Detection API")
                         .version("1.0")
-                        .description("Swagger UI"));
+                        .description("https://9022.408procr.amypo.ai/login"));
     }
 }
