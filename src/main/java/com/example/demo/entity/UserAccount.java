@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class UserAccount {
@@ -10,30 +9,17 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String employeeId;
     private String username;
     private String email;
     private String password;
     private String role;
     private String status;
 
-    private LocalDateTime createdAt;
+    public String getUsername() { return username; }
+    public String getEmail() { return email; }
+    public String getPassword() { return password; }
+    public String getRole() { return role; }
 
-    public UserAccount() {}
-
-    public UserAccount(String employeeId, String username, String email, String password, String role) {
-        this.employeeId = employeeId;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
-    @PrePersist
-    public void onCreate() {
-        if (this.status == null) this.status = "ACTIVE";
-        this.createdAt = LocalDateTime.now();
-    }
-
-    // getters & setters
+    public void setRole(String role) { this.role = role; }
+    public void setStatus(String status) { this.status = status; }
 }
