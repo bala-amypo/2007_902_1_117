@@ -20,6 +20,7 @@ public class UserAccount {
     public String getPassword() { return password; }
     public String getRole() { return role; }
 
+    public void setPassword(String password) { this.password = password; }
     public void setRole(String role) { this.role = role; }
     public void setStatus(String status) { this.status = status; }
 }
