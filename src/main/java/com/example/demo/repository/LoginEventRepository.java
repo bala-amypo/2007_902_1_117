@@ -1,10 +1,16 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
 import com.example.demo.entity.LoginEvent;
-import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 
-public interface LoginEventRepository extends JpaRepository<LoginEvent, Long> {
-    List<LoginEvent> findByUserId(Long userId);
-    List<LoginEvent> findByUserIdAndLoginStatus(Long userId, String status);
+public interface LoginEventService {
+
+    LoginEvent recordLogin(LoginEvent event);
+
+    List<LoginEvent> getEventsByUser(Long userId);
+
+    List<LoginEvent> getSuspiciousLogins(Long userId);
+
+    List<LoginEvent> getAllEvents();
 }

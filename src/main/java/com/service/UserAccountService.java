@@ -16,4 +16,6 @@ public interface UserAccountService {
     List<UserAccount> getAllUsers();
 
     Optional<UserAccount> findByUsername(String username);
+
+    boolean validateLogin(String username, String password);
 }
