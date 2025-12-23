@@ -1,65 +1,26 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-@Entity
 public class DeviceProfile {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String deviceId;
     private Long userId;
-    private String deviceType;
-    private String os;
-    private Boolean trusted;
+    private boolean isTrusted;
+    private LocalDateTime lastSeen;
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getDeviceId() { return deviceId; }
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
-    public String getDeviceId() {
-        return deviceId;
-    }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
+    public boolean getIsTrusted() { return isTrusted; }
+    public void setIsTrusted(boolean isTrusted) { this.isTrusted = isTrusted; }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getDeviceType() {
-        return deviceType;
-    }
-
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
-    }
-
-    public String getOs() {
-        return os;
-    }
-
-    public void setOs(String os) {
-        this.os = os;
-    }
-
-    public Boolean getTrusted() {
-        return trusted;
-    }
-
-    public void setTrusted(Boolean trusted) {
-        this.trusted = trusted;
-    }
+    public LocalDateTime getLastSeen() { return lastSeen; }
+    public void setLastSeen(LocalDateTime lastSeen) { this.lastSeen = lastSeen; }
 }
