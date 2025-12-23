@@ -1,43 +1,26 @@
 package com.example.demo.controller;
 
-
-import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.RegisterRequest;
+import com.example.demo.dto.LoginRequest;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.service.UserAccountService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
-    private final UserAccountService userAccountService;
-
-    public AuthController(UserAccountService userAccountService) {
-        this.userAccountService = userAccountService;
-    }
+    @Autowired
+    private UserAccountService userAccountService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserAccount> register(@RequestBody RegisterRequest request) {
-        UserAccount user = userAccountService.register(
-                request.getUsername(),
-                request.getPassword()
-        );
-        return ResponseEntity.ok(user);
+    public UserAccount register(@RequestBody RegisterRequest request) {
+        return userAccountService.register(request.getUsername(), request.getEmail(), request.getPassword());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        boolean valid = userAccountService.validateLogin(
-                request.getUsername(),
-                request.getPassword()
-        );
-
-        if (valid) {
-            return ResponseEntity.ok("Login successful for user: " + request.getUsername());
-        } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
+    public UserAccount login(@RequestBody LoginRequest request) {
+        return userAccountService.login(request.getEmail(), request.getPassword());
     }
 }
