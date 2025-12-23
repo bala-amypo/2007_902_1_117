@@ -22,7 +22,7 @@ public class UserAccountController {
     }
 
     @GetMapping("/{id}")
-    public UserAccount get(@PathVariable Long id) {
+    public UserAccount getById(@PathVariable Long id) {
         return service.getUserById(id);
     }
 
@@ -32,7 +32,7 @@ public class UserAccountController {
     }
 
     @GetMapping
-    public List<UserAccount> all() {
+    public List<UserAccount> getAll() {
         return service.getAllUsers();
     }
 }
