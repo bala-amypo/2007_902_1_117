@@ -1,34 +1,28 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.RegisterRequest;
-import com.example.demo.entity.UserAccount;
-import com.example.demo.service.UserAccountService;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
-    private final UserAccountService userAccountService;
-
-    public AuthController(UserAccountService userAccountService) {
-        this.userAccountService = userAccountService;
-    }
-
     @PostMapping("/register")
-    public UserAccount register(@RequestBody RegisterRequest request) {
-        return userAccountService.register(
-                request.getUsername(),
-                request.getPassword()
-        );
+    public String register(@RequestBody Map<String, String> request) {
+
+        String username = request.get("username");
+        String email = request.get("email");
+        String password = request.get("password");
+
+        return "User registered successfully: " + username;
     }
 
     @PostMapping("/login")
-    public UserAccount login(@RequestBody LoginRequest request) {
-        return userAccountService.login(
-                request.getUsername(),
-                request.getPassword()
-        );
+    public String login(@RequestBody Map<String, String> request) {
+
+        String username = request.get("username");
+        String password = request.get("password");
+
+        return "Login successful for user: " + username;
     }
 }
