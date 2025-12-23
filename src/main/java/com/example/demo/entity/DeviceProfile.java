@@ -1,26 +1,28 @@
 package com.example.demo.entity;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
+@Entity
 public class DeviceProfile {
-    private Long id;
-    private String deviceId;
-    private Long userId;
-    private boolean isTrusted;
-    private LocalDateTime lastSeen;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long userId;
+    private String deviceId;
+    private boolean trusted;
+
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
-    public String getDeviceId() { return deviceId; }
-    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
 
-    public boolean getIsTrusted() { return isTrusted; }
-    public void setIsTrusted(boolean isTrusted) { this.isTrusted = isTrusted; }
+    public String getDeviceId() { return deviceId; }
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
-    public LocalDateTime getLastSeen() { return lastSeen; }
-    public void setLastSeen(LocalDateTime lastSeen) { this.lastSeen = lastSeen; }
+    public boolean isTrusted() { return trusted; }
+    public void setTrusted(boolean trusted) { this.trusted = trusted; }
 }
