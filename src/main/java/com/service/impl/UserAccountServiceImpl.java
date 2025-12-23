@@ -1,63 +1,27 @@
-package com.example.demo.service.impl;
+package com.service.impl;
 
 import com.example.demo.entity.UserAccount;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository userRepo;
-
-    public UserAccountServiceImpl(UserAccountRepository userRepo) {
-        this.userRepo = userRepo;
-    }
+    private Map<Long, UserAccount> db = new HashMap<>();
+    private Long counter = 1L;
 
     @Override
     public UserAccount createUser(UserAccount user) {
-        if (userRepo.findByUsername(user.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Username already exists");
-        }
-
-        if (user.getStatus() == null) {
-            user.setStatus("ACTIVE");
-        }
-
-        return userRepo.save(user);
+        user.setId(counter++);
+        user.setStatus("ACTIVE");
+        db.put(user.getId(), user);
+        return user;
     }
 
     @Override
     public UserAccount getUserById(Long id) {
-        return userRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-    }
-
-    @Override
-    public UserAccount updateUserStatus(Long id, String status) {
-        UserAccount user = getUserById(id);
-        user.setStatus(status);
-        return userRepo.save(user);
-    }
-
-    @Override
-    public List<UserAccount> getAllUsers() {
-        return userRepo.findAll();
-    }
-
-    @Override
-    public Optional<UserAccount> findByUsername(String username) {
-        return userRepo.findByUsername(username);
-    }
-
-    @Override
-    public boolean validateLogin(String username, String password) {
-        return userRepo.findByUsername(username)
-                .map(u -> u.getPassword().equals(password))
-                .orElse(false);
+        return db.get(id);
     }
 }
