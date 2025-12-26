@@ -4,6 +4,6 @@ import com.example.demo.entity.DeviceProfile;
 import java.util.List;
 
 public interface DeviceProfileService {
-    DeviceProfile save(DeviceProfile device);
+    DeviceProfile save(DeviceProfile deviceProfile);
     List<DeviceProfile> findAll();
 }

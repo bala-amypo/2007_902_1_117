@@ -9,11 +9,9 @@ public class DeviceProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String deviceName;
+    private String deviceId;
+    private String deviceType;
+    private String os;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getDeviceName() { return deviceName; }
-    public void setDeviceName(String deviceName) { this.deviceName = deviceName; }
+    // getters & setters
 }
