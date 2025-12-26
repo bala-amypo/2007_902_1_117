@@ -17,12 +17,7 @@ public class DeviceProfileServiceImpl implements DeviceProfileService {
     }
 
     @Override
-    public DeviceProfile save(DeviceProfile device) {
-        return repository.save(device);
-    }
-
-    @Override
-    public List<DeviceProfile> findAll() {
+    public List<DeviceProfile> getAllDevices() {
         return repository.findAll();
     }
 }
