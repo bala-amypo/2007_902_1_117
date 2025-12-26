@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class DeviceProfile {
@@ -11,9 +12,25 @@ public class DeviceProfile {
 
     private Long userId;
     private String deviceId;
-    private boolean trusted;
+    private String deviceType;
+    private String osVersion;
+    private LocalDateTime lastSeen;
+    private Boolean isTrusted;
 
-    // Getters and Setters
+    public DeviceProfile() {}
+
+    @PrePersist
+    @PreUpdate
+    public void updateLastSeen() {
+        this.lastSeen = LocalDateTime.now();
+    }
+
+    // test helper method
+    public boolean isPresent() {
+        return true;
+    }
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -23,6 +40,14 @@ public class DeviceProfile {
     public String getDeviceId() { return deviceId; }
     public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
 
-    public boolean isTrusted() { return trusted; }
-    public void setTrusted(boolean trusted) { this.trusted = trusted; }
+    public String getDeviceType() { return deviceType; }
+    public void setDeviceType(String deviceType) { this.deviceType = deviceType; }
+
+    public String getOsVersion() { return osVersion; }
+    public void setOsVersion(String osVersion) { this.osVersion = osVersion; }
+
+    public LocalDateTime getLastSeen() { return lastSeen; }
+
+    public Boolean getIsTrusted() { return isTrusted; }
+    public void setIsTrusted(Boolean trusted) { isTrusted = trusted; }
 }

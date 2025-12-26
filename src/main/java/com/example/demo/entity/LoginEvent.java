@@ -12,10 +12,21 @@ public class LoginEvent {
 
     private Long userId;
     private String ipAddress;
-    private LocalDateTime loginTime;
-    private boolean suspicious;
+    private String location;
+    private String deviceId;
+    private LocalDateTime timestamp;
+    private String loginStatus;
 
-    // Getters and Setters
+    public LoginEvent() {}
+
+    @PrePersist
+    public void onCreate() {
+        if (this.timestamp == null) {
+            this.timestamp = LocalDateTime.now();
+        }
+    }
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -25,9 +36,14 @@ public class LoginEvent {
     public String getIpAddress() { return ipAddress; }
     public void setIpAddress(String ipAddress) { this.ipAddress = ipAddress; }
 
-    public LocalDateTime getLoginTime() { return loginTime; }
-    public void setLoginTime(LocalDateTime loginTime) { this.loginTime = loginTime; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 
-    public boolean isSuspicious() { return suspicious; }
-    public void setSuspicious(boolean suspicious) { this.suspicious = suspicious; }
+    public String getDeviceId() { return deviceId; }
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
+
+    public LocalDateTime getTimestamp() { return timestamp; }
+
+    public String getLoginStatus() { return loginStatus; }
+    public void setLoginStatus(String loginStatus) { this.loginStatus = loginStatus; }
 }

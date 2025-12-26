@@ -9,20 +9,30 @@ public class PolicyRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String ruleName;
+    private String ruleCode;
     private String description;
-    private boolean active;
+    private String severity;
+    private String conditionsJson;
+    private Boolean active;
 
-    // Getters and Setters
+    public PolicyRule() {}
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getRuleName() { return ruleName; }
-    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
+    public String getRuleCode() { return ruleCode; }
+    public void setRuleCode(String ruleCode) { this.ruleCode = ruleCode; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    public String getSeverity() { return severity; }
+    public void setSeverity(String severity) { this.severity = severity; }
+
+    public String getConditionsJson() { return conditionsJson; }
+    public void setConditionsJson(String conditionsJson) { this.conditionsJson = conditionsJson; }
+
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

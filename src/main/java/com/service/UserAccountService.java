@@ -2,26 +2,16 @@ package com.example.demo.service;
 
 import com.example.demo.entity.UserAccount;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface UserAccountService {
 
-    UserAccount createUser(UserAccount user);
+    UserAccount registerUser(UserAccount userAccount);
 
-    UserAccount findByUsername(String username);
+    Optional<UserAccount> findByUsername(String username);
 
-    UserAccount getUserById(Long id);   // ✅ ADD THIS
+    Optional<UserAccount> findByEmail(String email);
 
-    default UserAccount register(String username, String password) {
-        UserAccount user = new UserAccount();
-        user.setUsername(username);
-        user.setPassword(password);
-        return createUser(user);
-    }
-
-    default UserAccount login(String username, String password) {
-        UserAccount user = findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
-        }
-        throw new RuntimeException("Invalid username or password");
-    }
+    List<UserAccount> getAllUsers();
 }

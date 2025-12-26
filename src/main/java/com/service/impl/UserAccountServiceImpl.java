@@ -5,28 +5,35 @@ import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository repository;
+    private final UserAccountRepository userAccountRepository;
 
-    public UserAccountServiceImpl(UserAccountRepository repository) {
-        this.repository = repository;
+    public UserAccountServiceImpl(UserAccountRepository userAccountRepository) {
+        this.userAccountRepository = userAccountRepository;
     }
 
     @Override
-    public UserAccount createUser(UserAccount user) {
-        return repository.save(user);
+    public UserAccount registerUser(UserAccount userAccount) {
+        return userAccountRepository.save(userAccount);
     }
 
     @Override
-    public UserAccount findByUsername(String username) {
-        return repository.findByUsername(username).orElse(null);
+    public Optional<UserAccount> findByUsername(String username) {
+        return userAccountRepository.findByUsername(username);
     }
 
     @Override
-    public UserAccount getUserById(Long id) {   
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public Optional<UserAccount> findByEmail(String email) {
+        return userAccountRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<UserAccount> getAllUsers() {
+        return userAccountRepository.findAll();
     }
 }
