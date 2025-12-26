@@ -3,27 +3,45 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "user_accounts")
 public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
-    private String password;
-    private String role;
+    @Column(nullable = false, unique = true)
+    private String username;
 
-    public String getRole() {
-        return role;
+    private String password;
+    private String status;
+
+    // getters & setters
+    public Long getId() {
+        return id;
     }
 
     public String getUsername() {
-    return username;
-}
+        return username;
+    }
 
-public String getPassword() {
-    return password;
-}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    // getters & setters
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

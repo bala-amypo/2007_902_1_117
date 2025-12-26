@@ -5,9 +5,11 @@ import java.util.List;
 
 public interface UserAccountService {
 
-    UserAccount save(UserAccount user);          // REQUIRED by AuthController
-    UserAccount register(UserAccount user);      // REQUIRED by impl
+    UserAccount createUser(UserAccount user);
+
     UserAccount getUserById(Long id);
+
     List<UserAccount> getAllUsers();
-    UserAccount updateUserStatus(Long id, String status);
+
+    UserAccount updateUserStatus(Long userId, String status);
 }

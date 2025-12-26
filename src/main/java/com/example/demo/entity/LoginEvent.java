@@ -10,9 +10,20 @@ public class LoginEvent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
-    private String ipAddress;
-    private LocalDateTime loginTime;
+    private Long userId;
+    private boolean success;
+    private LocalDateTime timestamp;
 
-    // getters & setters
+    // getters/setters
+    public Long getUserId() {
+        return userId;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
 }
