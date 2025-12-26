@@ -22,9 +22,7 @@ public class DeviceProfileServiceImpl implements DeviceProfileService {
     }
 
     @Override
-    public DeviceProfile updateTrustStatus(Long deviceId, boolean trusted) {
-        DeviceProfile device = repository.findById(deviceId).orElseThrow();
-        device.setTrusted(trusted);
-        return repository.save(device);
+    public DeviceProfile findByDeviceId(String deviceId) {
+        return repository.findByDeviceId(deviceId);
     }
 }

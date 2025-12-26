@@ -1,30 +1,16 @@
-package com.example.demo;
+package com.example.demo.util;
+
 import java.util.List;
 
 public class RuleEvaluationUtil {
-    private final PolicyRuleRepository ruleRepo;
-    private final ViolationRecordRepository violationRepo;
 
-    public RuleEvaluationUtil(PolicyRuleRepository ruleRepo, ViolationRecordRepository violationRepo) {
-        this.ruleRepo = ruleRepo;
-        this.violationRepo = violationRepo;
-    }
+    private RuleEvaluationUtil() {}
 
-    public void evaluateLoginEvent(LoginEvent event) {
-        List<PolicyRule> activeRules = ruleRepo.findByActiveTrue();
-        
-        for (PolicyRule rule : activeRules) {
-            if (rule.getConditionsJson() != null && 
-                event.getLoginStatus() != null && 
-                event.getLoginStatus().equals(rule.getConditionsJson())) {
-                
-                ViolationRecord violation = new ViolationRecord();
-                violation.setUserId(event.getUserId());
-                violation.setEventId(event.getId());
-                violation.setSeverity(rule.getSeverity());
-                violation.setResolved(false);
-                violationRepo.save(violation);
-            }
-        }
+    // Generic rule check (no LoginEvent dependency)
+    public static boolean hasMultipleFailures(List<Boolean> loginResults) {
+        long failedCount = loginResults.stream()
+                .filter(success -> !success)
+                .count();
+        return failedCount >= 3;
     }
 }
