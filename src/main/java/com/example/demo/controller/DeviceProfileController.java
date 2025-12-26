@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.DeviceProfileController;
 import org.springframework.http.ResponseEntity;
 
 public class DeviceProfileController {
