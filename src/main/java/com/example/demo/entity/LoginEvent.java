@@ -14,7 +14,6 @@ public class LoginEvent {
     private boolean success;
     private LocalDateTime timestamp;
 
-    // getters/setters
     public Long getUserId() {
         return userId;
     }

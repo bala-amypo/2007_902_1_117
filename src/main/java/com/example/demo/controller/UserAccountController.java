@@ -1,15 +1,23 @@
-package com.example.demo;
-import org.springframework.http.ResponseEntity;
+package com.example.demo.controller;
 
+import com.example.demo.entity.UserAccount;
+import com.example.demo.service.UserAccountService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
 public class UserAccountController {
-    private final UserAccountService userService;
 
-    public UserAccountController(UserAccountService userService) {
-        this.userService = userService;
+    private final UserAccountService service;
+
+    public UserAccountController(UserAccountService service) {
+        this.service = service;
     }
 
-    public ResponseEntity<UserAccount> create(UserAccount user) {
-        UserAccount created = userService.createUser(user);
-        return ResponseEntity.ok(created);
+    @GetMapping
+    public List<UserAccount> getAllUsers() {
+        return service.getAllUsers();
     }
 }

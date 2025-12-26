@@ -17,6 +17,11 @@ public class LoginEventServiceImpl implements LoginEventService {
     }
 
     @Override
+    public void recordLogin(LoginEvent event) {
+        repository.save(event);
+    }
+
+    @Override
     public List<LoginEvent> getUserLoginEvents(Long userId) {
         return repository.findByUserId(userId);
     }

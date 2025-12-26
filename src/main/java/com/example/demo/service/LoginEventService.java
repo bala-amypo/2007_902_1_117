@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface LoginEventService {
 
+    void recordLogin(LoginEvent event);
+
     List<LoginEvent> getUserLoginEvents(Long userId);
 
     List<LoginEvent> getFailedLogins(Long userId);
