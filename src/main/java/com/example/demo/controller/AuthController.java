@@ -1,8 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.JwtResponse;
-import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.UserAccount;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.UserAccountService;
@@ -12,44 +9,21 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserAccountService userService;
+    private final UserAccountService service;
     private final JwtUtil jwtUtil;
 
-    public AuthController(UserAccountService userService) {
-        this.userService = userService;
-        this.jwtUtil = new JwtUtil(
-                "testsecretkeytestsecretkeytestsecretkey",
-                3600000,
-                true
-        );
+    public AuthController(UserAccountService service, JwtUtil jwtUtil) {
+        this.service = service;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/register")
-    public UserAccount register(@RequestBody RegisterRequest request) {
-
-        UserAccount user = new UserAccount();
-        user.setEmployeeId(request.getEmployeeId());
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-        user.setRole(request.getRole());
-
-        return userService.createUser(user);
+    public UserAccount register(@RequestBody UserAccount user) {
+        return service.save(user);
     }
 
     @PostMapping("/login")
-    public JwtResponse login(@RequestBody LoginRequest request) {
-
-        UserAccount user = userService.findByUsername(request.getUsernameOrEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
-
-        String token = jwtUtil.generateToken(
-                user.getUsername(),
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
-        );
-
-        return new JwtResponse(token, user.getId(), user.getEmail(), user.getRole());
+    public String login(@RequestBody UserAccount user) {
+        return jwtUtil.generateToken(user.getUsername());
     }
 }
