@@ -1,34 +1,48 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.entity.DeviceProfile;
-import com.example.demo.repository.DeviceProfileRepository;
-import com.example.demo.service.DeviceProfileService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class DeviceProfileServiceImpl implements DeviceProfileService {
 
-    private final DeviceProfileRepository deviceProfileRepository;
+    private final DeviceProfileRepository repo;
 
-    public DeviceProfileServiceImpl(DeviceProfileRepository deviceProfileRepository) {
-        this.deviceProfileRepository = deviceProfileRepository;
+    public DeviceProfileServiceImpl(DeviceProfileRepository repo) {
+        this.repo = repo;
     }
 
     @Override
-    public DeviceProfile save(DeviceProfile deviceProfile) {
-        return deviceProfileRepository.save(deviceProfile);
+    public DeviceProfile findByDeviceId(String deviceId) {
+        return repo.findByDeviceId(deviceId).orElse(null);
     }
 
     @Override
-    public Optional<DeviceProfile> findByDeviceId(String deviceId) {
-        return deviceProfileRepository.findByDeviceId(deviceId);
+    public List<DeviceProfile> getDevicesByUser(Long userId) {
+        return repo.findByUserId(userId);
     }
 
     @Override
-    public List<DeviceProfile> findByUserId(Long userId) {
-        return deviceProfileRepository.findByUserId(userId);
+    public DeviceProfile save(DeviceProfile device) {
+        return repo.save(device);
+    }
+}
+@Service
+public class DeviceProfileServiceImpl implements DeviceProfileService {
+
+    private final DeviceProfileRepository repo;
+
+    public DeviceProfileServiceImpl(DeviceProfileRepository repo) {
+        this.repo = repo;
+    }
+
+    @Override
+    public DeviceProfile findByDeviceId(String deviceId) {
+        return repo.findByDeviceId(deviceId).orElse(null);
+    }
+
+    @Override
+    public List<DeviceProfile> getDevicesByUser(Long userId) {
+        return repo.findByUserId(userId);
+    }
+
+    @Override
+    public DeviceProfile save(DeviceProfile device) {
+        return repo.save(device);
     }
 }

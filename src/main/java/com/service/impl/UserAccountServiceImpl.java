@@ -1,39 +1,32 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.entity.UserAccount;
-import com.example.demo.repository.UserAccountRepository;
-import com.example.demo.service.UserAccountService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository userAccountRepository;
+    private final UserAccountRepository repo;
 
-    public UserAccountServiceImpl(UserAccountRepository userAccountRepository) {
-        this.userAccountRepository = userAccountRepository;
+    public UserAccountServiceImpl(UserAccountRepository repo) {
+        this.repo = repo;
     }
 
     @Override
-    public UserAccount registerUser(UserAccount userAccount) {
-        return userAccountRepository.save(userAccount);
-    }
-
-    @Override
-    public Optional<UserAccount> findByUsername(String username) {
-        return userAccountRepository.findByUsername(username);
-    }
-
-    @Override
-    public Optional<UserAccount> findByEmail(String email) {
-        return userAccountRepository.findByEmail(email);
+    public UserAccount findByUsername(String username) {
+        return repo.findByUsername(username).orElse(null);
     }
 
     @Override
     public List<UserAccount> getAllUsers() {
-        return userAccountRepository.findAll();
+        return repo.findAll();
+    }
+
+    @Override
+    public UserAccount save(UserAccount user) {
+        return repo.save(user);
+    }
+
+    @Override
+    public void updateUserStatus(Long userId, String status) {
+        repo.findById(userId).ifPresent(u -> {
+            u.setStatus(status);
+            repo.save(u);
+        });
     }
 }
