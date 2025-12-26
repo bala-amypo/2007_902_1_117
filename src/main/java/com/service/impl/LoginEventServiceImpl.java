@@ -3,33 +3,36 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.LoginEvent;
 import com.example.demo.repository.LoginEventRepository;
 import com.example.demo.service.LoginEventService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.util.RuleEvaluationUtil;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class LoginEventServiceImpl implements LoginEventService {
 
-    @Autowired
-    private LoginEventRepository repository;
+    private final LoginEventRepository loginEventRepository;
+    private final RuleEvaluationUtil ruleEvaluationUtil;
 
-    @Override
-    public LoginEvent recordLogin(LoginEvent event) {
-        return repository.save(event);
+    public LoginEventServiceImpl(LoginEventRepository loginEventRepository,
+                                 RuleEvaluationUtil ruleEvaluationUtil) {
+        this.loginEventRepository = loginEventRepository;
+        this.ruleEvaluationUtil = ruleEvaluationUtil;
     }
 
     @Override
-    public List<LoginEvent> getEventsByUser(Long userId) {
-        return repository.findByUserId(userId);
+    public LoginEvent recordLogin(LoginEvent loginEvent) {
+        ruleEvaluationUtil.evaluateLogin(loginEvent);
+        return loginEventRepository.save(loginEvent);
     }
 
     @Override
-    public List<LoginEvent> getSuspiciousLogins(Long userId) {
-        return repository.findByUserIdAndSuspiciousTrue(userId);
+    public List<LoginEvent> getUserLoginEvents(Long userId) {
+        return loginEventRepository.findByUserId(userId);
     }
 
     @Override
-    public List<LoginEvent> getAllEvents() {
-        return repository.findAll();
+    public List<LoginEvent> getFailedLogins(Long userId) {
+        return loginEventRepository.findByUserIdAndLoginStatus(userId, "FAILED");
     }
 }
