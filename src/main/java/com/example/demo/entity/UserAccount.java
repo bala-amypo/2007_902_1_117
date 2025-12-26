@@ -17,5 +17,13 @@ public class UserAccount {
         return role;
     }
 
+    public String getUsername() {
+    return username;
+}
+
+public String getPassword() {
+    return password;
+}
+
     // getters & setters
 }
