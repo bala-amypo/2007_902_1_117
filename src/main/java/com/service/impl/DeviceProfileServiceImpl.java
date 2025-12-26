@@ -1,4 +1,11 @@
-com.example.demo.service.impl;
+package com.example.demo.service.impl;
+
+import com.example.demo.entity.DeviceProfile;
+import com.example.demo.repository.DeviceProfileRepository;
+import com.example.demo.service.DeviceProfileService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class DeviceProfileServiceImpl implements DeviceProfileService {
@@ -10,27 +17,8 @@ public class DeviceProfileServiceImpl implements DeviceProfileService {
     }
 
     @Override
-    public DeviceProfile findByDeviceId(String deviceId) {
-        return repo.findByDeviceId(deviceId).orElse(null);
-    }
-
-    @Override
-    public List<DeviceProfile> getDevicesByUser(Long userId) {
-        return repo.findByUserId(userId);
-    }
-
-    @Override
-    public DeviceProfile save(DeviceProfile device) {
+    public DeviceProfile registerDevice(DeviceProfile device) {
         return repo.save(device);
-    }
-}
-@Service
-public class DeviceProfileServiceImpl implements DeviceProfileService {
-
-    private final DeviceProfileRepository repo;
-
-    public DeviceProfileServiceImpl(DeviceProfileRepository repo) {
-        this.repo = repo;
     }
 
     @Override
@@ -39,12 +27,14 @@ public class DeviceProfileServiceImpl implements DeviceProfileService {
     }
 
     @Override
-    public List<DeviceProfile> getDevicesByUser(Long userId) {
-        return repo.findByUserId(userId);
+    public DeviceProfile updateTrustStatus(Long deviceId, boolean trusted) {
+        DeviceProfile d = repo.findById(deviceId).orElseThrow();
+        d.setTrusted(trusted);
+        return repo.save(d);
     }
 
     @Override
-    public DeviceProfile save(DeviceProfile device) {
-        return repo.save(device);
+    public List<DeviceProfile> getDevicesByUser(Long userId) {
+        return repo.findByUserId(userId);
     }
 }
