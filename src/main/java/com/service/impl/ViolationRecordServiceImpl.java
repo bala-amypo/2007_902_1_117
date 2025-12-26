@@ -1,3 +1,4 @@
+com.example.demo.service.impl;
 @Service
 public class ViolationRecordServiceImpl implements ViolationRecordService {
 

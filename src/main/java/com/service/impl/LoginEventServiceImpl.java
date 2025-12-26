@@ -1,3 +1,5 @@
+com.example.demo.service.impl;
+
 @Service
 public class LoginEventServiceImpl implements LoginEventService {
 
