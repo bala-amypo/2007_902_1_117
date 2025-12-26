@@ -1,38 +1,38 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.UserAccount;
 import com.example.demo.security.JwtUtil;
-import com.example.demo.service.UserAccountService;
+import com.example.demo.service.AuthService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final UserAccountService service;
+    private final AuthService authService;
     private final JwtUtil jwtUtil;
 
-    public AuthController(UserAccountService service, JwtUtil jwtUtil) {
-        this.service = service;
+    public AuthController(AuthService authService, JwtUtil jwtUtil) {
+        this.authService = authService;
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/register")
-    public UserAccount register(@RequestBody UserAccount user) {
-        user.setRole("USER");
-        user.setStatus("ACTIVE");
-        return service.save(user);
-    }
-
     @PostMapping("/login")
-    public String login(@RequestBody UserAccount request) {
-        UserAccount user = service.getByUsername(request.getUsername());
+    public ResponseEntity<?> login(@RequestBody Map<String, String> request) {
 
-        return jwtUtil.generateToken(
-                user.getUsername(),
-                user.getId(),
-                user.getRole(),
-                user.getStatus()
-        );
+        String username = request.get("username");
+        String password = request.get("password");
+
+        boolean authenticated = authService.authenticate(username, password);
+
+        if (!authenticated) {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
+
+        String token = jwtUtil.generateToken(username);
+
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }
