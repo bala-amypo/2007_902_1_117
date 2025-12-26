@@ -1,11 +1,8 @@
-package com.example.demo.repository;
-
-import com.example.demo.entity.PolicyRule;
-import org.springframework.data.jpa.repository.JpaRepository;
+package com.example.demo;
 
 import java.util.List;
 
-public interface PolicyRuleRepository extends JpaRepository<PolicyRule, Long> {
-
+public interface PolicyRuleRepository {
+    PolicyRule save(PolicyRule rule);
     List<PolicyRule> findByActiveTrue();
 }

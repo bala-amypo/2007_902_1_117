@@ -1,30 +1,29 @@
+package com.example.demo;
+import java.util.List;
 
-@Service
 public class LoginEventServiceImpl implements LoginEventService {
+    private final LoginEventRepository loginRepo;
+    private final RuleEvaluationUtil ruleEvaluator;
 
-    private final LoginEventRepository repo;
-
-    public LoginEventServiceImpl(LoginEventRepository repo) {
-        this.repo = repo;
+    public LoginEventServiceImpl(LoginEventRepository loginRepo, RuleEvaluationUtil ruleEvaluator) {
+        this.loginRepo = loginRepo;
+        this.ruleEvaluator = ruleEvaluator;
     }
 
     @Override
     public LoginEvent recordLogin(LoginEvent event) {
-        return repo.save(event);
+        LoginEvent saved = loginRepo.save(event);
+        ruleEvaluator.evaluateLoginEvent(saved);
+        return saved;
     }
 
     @Override
-    public List<LoginEvent> getUserLoginEvents(Long userId) {
-        return repo.findByUserId(userId);
+    public List<LoginEvent> getEventsByUser(Long userId) {
+        return loginRepo.findByUserId(userId);
     }
 
     @Override
-    public List<LoginEvent> getFailedLogins(Long userId) {
-        return repo.findByUserIdAndSuccessFalse(userId);
-    }
-
-    @Override
-    public List<LoginEvent> getAllEvents() {
-        return repo.findAll();
+    public List<LoginEvent> getSuspiciousLogins(Long userId) {
+        return loginRepo.findByUserIdAndLoginStatus(userId, "FAILED");
     }
 }
