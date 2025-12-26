@@ -2,8 +2,8 @@ package com.example.demo;
 
 import java.util.Optional;
 
-public interface DeviceProfileService {
-    DeviceProfile registerDevice(DeviceProfile device);
+public interface DeviceProfileRepository {
+    DeviceProfile save(DeviceProfile device);
+    Optional<DeviceProfile> findById(Long id);
     Optional<DeviceProfile> findByDeviceId(String deviceId);
-    DeviceProfile updateTrustStatus(Long id, Boolean trusted);
 }
