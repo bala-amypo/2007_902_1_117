@@ -23,6 +23,7 @@ public class DeviceProfileServiceImpl implements DeviceProfileService {
 
     @Override
     public DeviceProfile findByDeviceId(String deviceId) {
-        return repository.findByDeviceId(deviceId);
+        return repository.findByDeviceId(deviceId)
+                .orElse(null); 
     }
 }
