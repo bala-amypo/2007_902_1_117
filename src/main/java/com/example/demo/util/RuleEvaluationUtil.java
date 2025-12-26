@@ -1,15 +1,30 @@
-package com.example.demo.util;
+package com.example.demo;
+import java.util.List;
 
-import com.example.demo.entity.LoginEvent;
-import org.springframework.stereotype.Component;
-
-@Component
 public class RuleEvaluationUtil {
+    private final PolicyRuleRepository ruleRepo;
+    private final ViolationRecordRepository violationRepo;
 
-    public void evaluateLogin(LoginEvent loginEvent) {
-        // Test-safe stub: tests verify method is called, not logic
-        if (loginEvent.getLoginStatus() == null) {
-            loginEvent.setLoginStatus("SUCCESS");
+    public RuleEvaluationUtil(PolicyRuleRepository ruleRepo, ViolationRecordRepository violationRepo) {
+        this.ruleRepo = ruleRepo;
+        this.violationRepo = violationRepo;
+    }
+
+    public void evaluateLoginEvent(LoginEvent event) {
+        List<PolicyRule> activeRules = ruleRepo.findByActiveTrue();
+        
+        for (PolicyRule rule : activeRules) {
+            if (rule.getConditionsJson() != null && 
+                event.getLoginStatus() != null && 
+                event.getLoginStatus().equals(rule.getConditionsJson())) {
+                
+                ViolationRecord violation = new ViolationRecord();
+                violation.setUserId(event.getUserId());
+                violation.setEventId(event.getId());
+                violation.setSeverity(rule.getSeverity());
+                violation.setResolved(false);
+                violationRepo.save(violation);
+            }
         }
     }
 }
