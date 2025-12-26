@@ -19,12 +19,20 @@ public class AuthController {
 
     @PostMapping("/register")
     public UserAccount register(@RequestBody UserAccount user) {
+        user.setRole("USER");
+        user.setStatus("ACTIVE");
         return service.save(user);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserAccount user) {
-        return jwtUtil.generateToken(username, user.getId(), "USER", user.getStatus());
+    public String login(@RequestBody UserAccount request) {
+        UserAccount user = service.getByUsername(request.getUsername());
 
+        return jwtUtil.generateToken(
+                user.getUsername(),
+                user.getId(),
+                user.getRole(),
+                user.getStatus()
+        );
     }
 }

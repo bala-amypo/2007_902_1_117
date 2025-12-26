@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/logins")
+@RequestMapping("/login-events")
 public class LoginEventController {
 
     private final LoginEventService loginService;
@@ -16,23 +16,13 @@ public class LoginEventController {
         this.loginService = loginService;
     }
 
-    @PostMapping("/record")
-    public LoginEvent record(@RequestBody LoginEvent event) {
-        return loginService.recordLogin(event);
+    @PostMapping
+    public void recordLogin(@RequestBody LoginEvent event) {
+        loginService.recordLogin(event);
     }
 
     @GetMapping("/user/{userId}")
-    public List<LoginEvent> getByUser(@PathVariable Long userId) {
+    public List<LoginEvent> getUserEvents(@PathVariable Long userId) {
         return loginService.getUserLoginEvents(userId);
-    }
-
-    @GetMapping("/suspicious/{userId}")
-    public List<LoginEvent> getSuspicious(@PathVariable Long userId) {
-        return loginService.getFailedLogins(userId);
-    }
-
-    @GetMapping
-    public List<LoginEvent> getAll() {
-        return loginService.getAllEvents();
     }
 }
