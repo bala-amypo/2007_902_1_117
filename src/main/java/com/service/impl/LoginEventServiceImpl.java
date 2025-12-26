@@ -1,8 +1,4 @@
-package com.service.impl;
 
-import com.service.LoginEventService;
-import com.model.LoginEvent;  
-import org.springframework.stereotype.Service;
 @Service
 public class LoginEventServiceImpl implements LoginEventService {
 
