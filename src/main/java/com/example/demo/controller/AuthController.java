@@ -24,6 +24,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody UserAccount user) {
-        return jwtUtil.generateToken(user.getUsername());
+        return jwtUtil.generateToken(username, user.getId(), "USER", user.getStatus());
+
     }
 }
