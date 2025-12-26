@@ -1,38 +1,41 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.entity.UserAccount;
-import com.example.demo.repository.UserAccountRepository;
-import com.example.demo.service.UserAccountService;
-import org.springframework.stereotype.Service;
-
+package com.example.demo;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
 
-@Service
 public class UserAccountServiceImpl implements UserAccountService {
+    private final UserAccountRepository userRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    private final UserAccountRepository repository;
-
-    public UserAccountServiceImpl(UserAccountRepository repository) {
-        this.repository = repository;
+    public UserAccountServiceImpl(UserAccountRepository userRepo, PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserAccount createUser(UserAccount user) {
-        return repository.save(user);
-    }
-
-    @Override
-    public UserAccount findByUsername(String username) {
-        return repository.findByUsername(username).orElse(null);
+        if (user.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return userRepo.save(user);
     }
 
     @Override
     public UserAccount getUserById(Long id) {
-        return repository.findById(id).orElse(null);
+        return userRepo.findById(id).orElse(null);
+    }
+
+    @Override
+    public UserAccount updateUserStatus(Long id, String status) {
+        UserAccount user = userRepo.findById(id).orElse(null);
+        if (user != null) {
+            user.setStatus(status);
+            return userRepo.save(user);
+        }
+        return null;
     }
 
     @Override
     public List<UserAccount> getAllUsers() {
-        return repository.findAll();
+        return userRepo.findAll();
     }
 }
