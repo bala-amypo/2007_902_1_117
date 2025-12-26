@@ -2,24 +2,38 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.UserAccount;
 import com.example.demo.service.UserAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserAccountController {
 
-    @Autowired
-    private UserAccountService service;
+    private final UserAccountService userService;
 
-    @PostMapping("/create")
-    public UserAccount createUser(@RequestBody UserAccount user) {
-        return service.createUser(user);
+    public UserAccountController(UserAccountService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping
+    public UserAccount create(@RequestBody UserAccount user) {
+        return userService.createUser(user);
     }
 
     @GetMapping("/{id}")
-    public UserAccount getUserById(@PathVariable Long id) {
-        return service.getUserById(id);
+    public UserAccount getById(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
+
+    @PutMapping("/{id}/status")
+    public UserAccount updateStatus(@PathVariable Long id,
+                                    @RequestParam String status) {
+        return userService.updateUserStatus(id, status);
+    }
+
+    @GetMapping
+    public List<UserAccount> getAll() {
+        return userService.getAllUsers();
     }
 }
-

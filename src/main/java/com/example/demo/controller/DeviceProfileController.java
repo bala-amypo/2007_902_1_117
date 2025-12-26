@@ -2,34 +2,39 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.DeviceProfile;
 import com.example.demo.service.DeviceProfileService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/devices")
+@RequestMapping("/api/devices")
 public class DeviceProfileController {
 
-    @Autowired
-    private DeviceProfileService service;
+    private final DeviceProfileService deviceService;
 
-    @PostMapping("/register")
-    public DeviceProfile registerDevice(@RequestBody DeviceProfile device) {
-        return service.registerDevice(device);
+    public DeviceProfileController(DeviceProfileService deviceService) {
+        this.deviceService = deviceService;
     }
 
-    @PutMapping("/trust/{id}")
-    public DeviceProfile updateTrustStatus(@PathVariable Long id, @RequestParam boolean status) {
-        return service.updateTrustStatus(id, status);
+    @PostMapping
+    public DeviceProfile register(@RequestBody DeviceProfile device) {
+        return deviceService.registerDevice(device);
+    }
+
+    @PutMapping("/{id}/trust")
+    public DeviceProfile trust(@PathVariable Long id,
+                               @RequestParam boolean trust) {
+        return deviceService.updateTrustStatus(id, trust);
     }
 
     @GetMapping("/user/{userId}")
-    public List<DeviceProfile> getDevicesByUser(@PathVariable Long userId) {
-        return service.getDevicesByUser(userId);
+    public List<DeviceProfile> getByUser(@PathVariable Long userId) {
+        return deviceService.getDevicesByUser(userId);
     }
 
-    @GetMapping("/{deviceId}")
-    public DeviceProfile findByDeviceId(@PathVariable String deviceId) {
-        return service.findByDeviceId(deviceId);
+    @GetMapping("/lookup/{deviceId}")
+    public DeviceProfile lookup(@PathVariable String deviceId) {
+        return deviceService.findByDeviceId(deviceId)
+                .orElseThrow(() -> new RuntimeException("Device not found"));
     }
 }

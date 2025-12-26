@@ -2,34 +2,38 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.PolicyRule;
 import com.example.demo.service.PolicyRuleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/rules")
+@RequestMapping("/api/rules")
 public class PolicyRuleController {
 
-    @Autowired
-    private PolicyRuleService service;
+    private final PolicyRuleService ruleService;
 
-    @PostMapping("/create")
-    public PolicyRule createRule(@RequestBody PolicyRule rule) {
-        return service.createRule(rule);
+    public PolicyRuleController(PolicyRuleService ruleService) {
+        this.ruleService = ruleService;
     }
 
-    @PutMapping("/update")
-    public PolicyRule updateRule(@RequestBody PolicyRule rule) {
-        return service.updateRule(rule);
+    @PostMapping
+    public PolicyRule create(@RequestBody PolicyRule rule) {
+        return ruleService.createRule(rule);
+    }
+
+    @PutMapping("/{id}")
+    public PolicyRule update(@PathVariable Long id,
+                             @RequestBody PolicyRule rule) {
+        return ruleService.updateRule(id, rule);
     }
 
     @GetMapping("/active")
-    public List<PolicyRule> getActiveRules() {
-        return service.getActiveRules();
+    public List<PolicyRule> active() {
+        return ruleService.getActiveRules();
     }
 
-    @GetMapping("/all")
-    public List<PolicyRule> getAllRules() {
-        return service.getAllRules();
+    @GetMapping
+    public List<PolicyRule> all() {
+        return ruleService.getAllRules();
     }
 }

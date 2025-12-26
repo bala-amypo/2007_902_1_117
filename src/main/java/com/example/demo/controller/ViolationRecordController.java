@@ -2,39 +2,42 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ViolationRecord;
 import com.example.demo.service.ViolationRecordService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/violations")
+@RequestMapping("/api/violations")
 public class ViolationRecordController {
 
-    @Autowired
-    private ViolationRecordService service;
+    private final ViolationRecordService violationService;
 
-    @PostMapping("/log")
-    public ViolationRecord logViolation(@RequestBody ViolationRecord record) {
-        return service.logViolation(record);
+    public ViolationRecordController(ViolationRecordService violationService) {
+        this.violationService = violationService;
+    }
+
+    @PostMapping
+    public ViolationRecord create(@RequestBody ViolationRecord record) {
+        return violationService.logViolation(record);
     }
 
     @GetMapping("/user/{userId}")
-    public List<ViolationRecord> getViolationsByUser(@PathVariable Long userId) {
-        return service.getViolationsByUser(userId);
+    public List<ViolationRecord> byUser(@PathVariable Long userId) {
+        return violationService.getViolationsByUser(userId);
     }
 
-    @PutMapping("/resolve/{id}")
-    public ViolationRecord markResolved(@PathVariable Long id) {
-        return service.markResolved(id);
+    @PutMapping("/{id}/resolve")
+    public ViolationRecord resolve(@PathVariable Long id) {
+        return violationService.markResolved(id);
     }
 
     @GetMapping("/unresolved")
-    public List<ViolationRecord> getUnresolvedViolations() {
-        return service.getUnresolvedViolations();
+    public List<ViolationRecord> unresolved() {
+        return violationService.getUnresolvedViolations();
     }
 
-    @GetMapping("/all")
-    public List<ViolationRecord> getAllViolations() {
-        return service.getAllViolations();
+    @GetMapping
+    public List<ViolationRecord> all() {
+        return violationService.getAllViolations();
     }
 }
