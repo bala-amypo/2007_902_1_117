@@ -17,6 +17,10 @@ public class LoginEventServiceImpl implements LoginEventService {
         this.evaluator = evaluator;
     }
 
+     public LoginEventServiceImpl(LoginEventRepository loginEventRepository) {
+        this.loginEventRepository = loginEventRepository;
+    }
+
     @Override
     public LoginEvent recordLogin(LoginEvent event) {
         LoginEvent saved = repo.save(event);
@@ -32,5 +36,10 @@ public class LoginEventServiceImpl implements LoginEventService {
     @Override
     public List<LoginEvent> getSuspiciousLogins(Long userId) {
         return repo.findByUserIdAndLoginStatus(userId, "FAILED");
+    }
+
+    @Override
+    public List<LoginEvent> getUserLoginEvents(Long userId) {
+        return loginEventRepository.findByUserId(userId);
     }
 }
