@@ -1,15 +1,46 @@
-package com.example.demo.repository;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.LoginEvent;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.example.demo.repository.LoginEventRepository;
+import com.example.demo.service.LoginEventService;
+import com.example.demo.util.RuleEvaluationUtil;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository
-public interface LoginEventRepository extends JpaRepository<LoginEvent, Long> {
+@Service
+public class LoginEventServiceImpl implements LoginEventService {
 
-    List<LoginEvent> findByUserId(Long userId);
+    private final LoginEventRepository loginEventRepository;
+    private final RuleEvaluationUtil evaluator;
 
-    List<LoginEvent> findByUserIdAndLoginStatus(Long userId, String status);
+    public LoginEventServiceImpl(
+            LoginEventRepository loginEventRepository,
+            RuleEvaluationUtil evaluator
+    ) {
+        this.loginEventRepository = loginEventRepository;
+        this.evaluator = evaluator;
+    }
+
+    @Override
+    public LoginEvent recordLogin(LoginEvent event) {
+        LoginEvent saved = loginEventRepository.save(event);
+        evaluator.evaluateLoginEvent(saved);
+        return saved;
+    }
+
+    @Override
+    public List<LoginEvent> getEventsByUser(Long userId) {
+        return loginEventRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<LoginEvent> getSuspiciousLogins(Long userId) {
+        return loginEventRepository.findByUserIdAndLoginStatus(userId, "FAILED");
+    }
+
+    @Override
+    public List<LoginEvent> getUserLoginEvents(Long userId) {
+        return loginEventRepository.findByUserId(userId);
+    }
 }
