@@ -1,52 +1,26 @@
-
 package com.example.demo.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import com.example.demo.security.JwtUtil;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 
-@Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
+    private static final String JWT_SECRET = "TestSecretKeyForJWT1234567890";
+    private static final long JWT_EXPIRY = 3600000L; // 1 hour
+    private static final boolean JWT_ENABLED = true;
+
+    /**
+     * Returns PasswordEncoder instance for services.
+     */
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/auth/**",
-                    "/swagger-ui/**",
-                    "/v3/api-docs/**",
-                    "/swagger-ui.html",
-                    "/simple-status",
-                    "/api/**"      // ✅ CHANGED HERE
-                ).permitAll()
-                .anyRequest().permitAll()
-            );
-
-        return http.build();
+    /**
+     * Returns a JwtUtil instance for services or tests.
+     */
+    public JwtUtil jwtUtil() {
+        return new JwtUtil(JWT_SECRET, JWT_EXPIRY, JWT_ENABLED);
     }
 }

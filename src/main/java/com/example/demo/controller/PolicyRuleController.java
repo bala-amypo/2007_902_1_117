@@ -1,8 +1,13 @@
-package com.example.demo;
+package com.example.demo.controller;
+
+import com.example.demo.entity.PolicyRule;
+import com.example.demo.service.PolicyRuleService;
 import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 public class PolicyRuleController {
+
     private final PolicyRuleService ruleService;
 
     public PolicyRuleController(PolicyRuleService ruleService) {
@@ -10,7 +15,6 @@ public class PolicyRuleController {
     }
 
     public ResponseEntity<List<PolicyRule>> all() {
-        List<PolicyRule> rules = ruleService.getAllRules();
-        return ResponseEntity.ok(rules);
+        return ResponseEntity.ok(ruleService.getAllRules());
     }
 }

@@ -1,7 +1,11 @@
-package com.example.demo;
+package com.example.demo.controller;
+
+import com.example.demo.entity.ViolationRecord;
+import com.example.demo.service.ViolationRecordService;
 import org.springframework.http.ResponseEntity;
 
 public class ViolationRecordController {
+
     private final ViolationRecordService violationService;
 
     public ViolationRecordController(ViolationRecordService violationService) {
@@ -9,7 +13,6 @@ public class ViolationRecordController {
     }
 
     public ResponseEntity<ViolationRecord> log(ViolationRecord violation) {
-        ViolationRecord logged = violationService.logViolation(violation);
-        return ResponseEntity.ok(logged);
+        return ResponseEntity.ok(violationService.logViolation(violation));
     }
 }

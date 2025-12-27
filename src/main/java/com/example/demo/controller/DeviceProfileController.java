@@ -2,27 +2,20 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.DeviceProfile;
 import com.example.demo.service.DeviceProfileService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
-import java.util.List;
+import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/devices")
 public class DeviceProfileController {
 
-    private final DeviceProfileService service;
+    private final DeviceProfileService deviceService;
 
-    public DeviceProfileController(DeviceProfileService service) {
-        this.service = service;
+    public DeviceProfileController(DeviceProfileService deviceService) {
+        this.deviceService = deviceService;
     }
 
-    @GetMapping
-    public List<DeviceProfile> getAllDevices() {
-        return service.getAllDevices();
-    }
-
-    @GetMapping("/{deviceId}")
-    public DeviceProfile getByDeviceId(@PathVariable String deviceId) {
-        return service.findByDeviceId(deviceId); // ✅ no Optional, no orElse
+    public ResponseEntity<DeviceProfile> lookup(String deviceId) {
+        Optional<DeviceProfile> device = deviceService.findByDeviceId(deviceId);
+        return ResponseEntity.ok(device.orElse(null));
     }
 }
