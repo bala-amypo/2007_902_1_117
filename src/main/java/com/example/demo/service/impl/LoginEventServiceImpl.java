@@ -10,6 +10,7 @@ public class LoginEventServiceImpl implements LoginEventService {
 
     private final LoginEventRepository repo;
     private final RuleEvaluationUtil evaluator;
+     private final LoginEventRepository loginEventRepository;
 
     public LoginEventServiceImpl(LoginEventRepository repo, RuleEvaluationUtil evaluator) {
         this.repo = repo;

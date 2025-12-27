@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/login-event")
+@RequestMapping("/api/login-events")
 public class LoginEventController {
 
     private final LoginEventService loginService;
@@ -17,7 +17,7 @@ public class LoginEventController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<LoginEvent> getUserLoginEvent(@PathVariable Long userId) {
-        return loginService.getUserLoginEvent(userId);
+    public List<LoginEvent> getUserLoginEvents(@PathVariable Long userId) {
+        return loginService.getUserLoginEvents(userId);
     }
 }
