@@ -1,31 +1,31 @@
-package com.example.demo.dto;
+// package com.example.demo.dto;
 
-public class LoginResponse {
+// public class LoginResponse {
 
-    private String token;
-    private String message;
+//     private String token;
+//     private String message;
 
-    public LoginResponse() {
-    }
+//     public LoginResponse() {
+//     }
 
-    public LoginResponse(String token, String message) {
-        this.token = token;
-        this.message = message;
-    }
+//     public LoginResponse(String token, String message) {
+//         this.token = token;
+//         this.message = message;
+//     }
 
-    public String getToken() {
-        return token;
-    }
+//     public String getToken() {
+//         return token;
+//     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+//     public void setToken(String token) {
+//         this.token = token;
+//     }
 
-    public String getMessage() {
-        return message;
-    }
+//     public String getMessage() {
+//         return message;
+//     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-}
+//     public void setMessage(String message) {
+//         this.message = message;
+//     }
+// }
