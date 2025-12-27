@@ -1,11 +1,18 @@
 package com.example.demo.util;
 
-import com.example.demo.entity.LoginEvent;
+import com.example.demo.repository.PolicyRuleRepository;
+import com.example.demo.repository.ViolationRecordRepository;
 
 public class RuleEvaluationUtil {
 
-    public boolean evaluateLoginEvent(LoginEvent event) {
-        // Implement your logic, for now return false
-        return false;
+    private final PolicyRuleRepository policyRuleRepository;
+    private final ViolationRecordRepository violationRecordRepository;
+
+    public RuleEvaluationUtil(
+            PolicyRuleRepository policyRuleRepository,
+            ViolationRecordRepository violationRecordRepository
+    ) {
+        this.policyRuleRepository = policyRuleRepository;
+        this.violationRecordRepository = violationRecordRepository;
     }
 }
