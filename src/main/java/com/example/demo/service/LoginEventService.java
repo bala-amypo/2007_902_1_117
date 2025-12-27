@@ -8,4 +8,5 @@ public interface LoginEventService {
     List<LoginEvent> getEventsByUser(Long userId);
     List<LoginEvent> getUserLoginEvents(Long userId);
     List<LoginEvent> getSuspiciousLogins(Long userId);
+ 
 }
