@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.example.demo.repository;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.demo.entity.ViolationRecord;
+import java.util.*;
 
 public interface ViolationRecordRepository {
     ViolationRecord save(ViolationRecord violation);
-    List<ViolationRecord> findByResolvedFalse();
     Optional<ViolationRecord> findById(Long id);
+    List<ViolationRecord> findByResolvedFalse();
 }

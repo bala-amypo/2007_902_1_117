@@ -3,65 +3,78 @@ package com.example.demo.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Component;
+import io.jsonwebtoken.JwtException;
 
-import java.security.Key;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.function.Function;
 
-@Component
 public class JwtUtil {
 
-    // Use a strong 256-bit key
-    private static final String SECRET_KEY = "THIS_IS_A_SECURE_SECRET_KEY_FOR_JWT_256_BITS_1234567890";
+    private final String secret;
+    private final long expiry;
+    private final boolean enabled;
 
-    // Token validity: 1 hour
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60;
-
-    // Get signing key from secret
-    private Key getSigningKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    public JwtUtil(String secret, long expiry, boolean enabled) {
+        this.secret = secret;
+        this.expiry = expiry;
+        this.enabled = enabled;
     }
 
-    // Generate JWT token for a username
-    public String generateToken(String username) {
+    // -------------------------------------------------
+    // GENERATE TOKEN (USED IN TESTS)
+    // -------------------------------------------------
+    public String generateToken(String username, Long userId, String email, String role) {
+
         return Jwts.builder()
                 .setSubject(username)
+                .claim("userId", userId)
+                .claim("email", email)
+                .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + expiry))
+                .signWith(
+                        SignatureAlgorithm.HS256,
+                        secret.getBytes(StandardCharsets.UTF_8)
+                )
                 .compact();
     }
 
-    // Extract username from token
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    // -------------------------------------------------
+    // VALIDATE TOKEN
+    // -------------------------------------------------
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
+                    .parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
     }
 
-    // Extract expiration date from token
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
-    // Extract any claim using claimsResolver function
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
+    // -------------------------------------------------
+    // INTERNAL: EXTRACT CLAIMS
+    // -------------------------------------------------
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
-        return claimsResolver.apply(claims);
     }
 
-    // Check if token is expired
-    public boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
+    // -------------------------------------------------
+    // EXTRACT CLAIMS METHODS (USED IN TESTS)
+    // -------------------------------------------------
+    public String getEmail(String token) {
+        return extractAllClaims(token).get("email", String.class);
     }
 
-    // Validate token: check username and expiration
-    public boolean validateToken(String token, String username) {
-        final String tokenUsername = extractUsername(token);
-        return (tokenUsername.equals(username) && !isTokenExpired(token));
+    public String getRole(String token) {
+        return extractAllClaims(token).get("role", String.class);
+    }
+
+    public Long getUserId(String token) {
+        return extractAllClaims(token).get("userId", Long.class);
     }
 }

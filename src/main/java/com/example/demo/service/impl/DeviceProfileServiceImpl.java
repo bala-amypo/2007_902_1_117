@@ -3,27 +3,30 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.DeviceProfile;
 import com.example.demo.repository.DeviceProfileRepository;
 import com.example.demo.service.DeviceProfileService;
-import org.springframework.stereotype.Service;
+import java.util.Optional;
 
-import java.util.List;
-
-@Service
 public class DeviceProfileServiceImpl implements DeviceProfileService {
 
-    private final DeviceProfileRepository repository;
+    private final DeviceProfileRepository repo;
 
-    public DeviceProfileServiceImpl(DeviceProfileRepository repository) {
-        this.repository = repository;
+    public DeviceProfileServiceImpl(DeviceProfileRepository repo) {
+        this.repo = repo;
     }
 
     @Override
-    public List<DeviceProfile> getAllDevices() {
-        return repository.findAll();
+    public DeviceProfile registerDevice(DeviceProfile d) {
+        return repo.save(d);
     }
 
     @Override
-    public DeviceProfile findByDeviceId(String deviceId) {
-        return repository.findByDeviceId(deviceId)
-                .orElse(null); 
+    public Optional<DeviceProfile> findByDeviceId(String deviceId) {
+        return repo.findByDeviceId(deviceId);
+    }
+
+    @Override
+    public DeviceProfile updateTrustStatus(Long id, boolean trust) {
+        DeviceProfile d = repo.findById(id).orElse(null);
+        d.setIsTrusted(trust);
+        return repo.save(d);
     }
 }
