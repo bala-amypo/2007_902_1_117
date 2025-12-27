@@ -17,7 +17,7 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
 
         Server httpsServer = new Server();
-        httpsServer.setUrl("https://9022.408procr.amypo.ai");
+        httpsServer.setUrl("https://9022.408procr.amypo.ai/");
         httpsServer.setDescription("Production HTTPS Server");
 
         return new OpenAPI()
