@@ -1,38 +1,25 @@
 package com.example.demo.controller;
 
-import com.example.demo.security.JwtUtil;
+import com.example.demo.dto.LoginRequest;
+import com.example.demo.dto.LoginResponse;
 import com.example.demo.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     private final AuthService authService;
-    private final JwtUtil jwtUtil;
 
-    public AuthController(AuthService authService, JwtUtil jwtUtil) {
+    @Autowired
+    public AuthController(AuthService authService) {
         this.authService = authService;
-        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> request) {
-
-        String username = request.get("username");
-        String password = request.get("password");
-
-        boolean authenticated = authService.authenticate(username, password);
-
-        if (!authenticated) {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
-
-        String token = jwtUtil.generateToken(username);
-
-        return ResponseEntity.ok(Map.of("token", token));
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 }
