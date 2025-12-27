@@ -22,7 +22,7 @@ public class LoginEventController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<LoginEvent> getUserEvents(@PathVariable Long userId) {
-        return loginService.getUserLoginEvents(userId);
+    public List<LoginEvent> getUserEvent(@PathVariable Long userId) {
+        return loginService.getUserLoginEvent(userId);
     }
 }
