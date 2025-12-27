@@ -1,15 +1,19 @@
 package com.example.demo.dto;
 
 public class LoginRequest {
-    private String usernameOrEmail;
+
+    private String username;
     private String password;
 
-    public String getUsernameOrEmail() {
-        return usernameOrEmail;
+    public LoginRequest() {
     }
 
-    public void setUsernameOrEmail(String usernameOrEmail) {
-        this.usernameOrEmail = usernameOrEmail;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
