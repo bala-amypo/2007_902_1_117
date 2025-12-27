@@ -20,4 +20,6 @@ public class LoginEventController {
     public List<LoginEvent> getUserLoginEvents(@PathVariable Long userId) {
         return loginService.getUserLoginEvents(userId);
     }
+
+    
 }
