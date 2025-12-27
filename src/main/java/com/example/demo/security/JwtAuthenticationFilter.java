@@ -1,13 +1,13 @@
-package com.example.demo.security;
+// package com.example.demo.security;
 
-import org.springframework.stereotype.Component;
+// import org.springframework.stereotype.Component;
 
-@Component
-public class JwtAuthenticationFilter {
+// @Component
+// public class JwtAuthenticationFilter {
 
-    private final JwtUtil jwtUtil;
+//     private final JwtUtil jwtUtil;
 
-    public JwtAuthenticationFilter() {
-        this.jwtUtil = new JwtUtil(); // ✅ NO parameters
-    }
-}
+//     public JwtAuthenticationFilter() {
+//         this.jwtUtil = new JwtUtil(); // ✅ NO parameters
+//     }
+// }

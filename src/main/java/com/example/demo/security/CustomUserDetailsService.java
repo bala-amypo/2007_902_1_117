@@ -1,33 +1,33 @@
-package com.example.demo.security;
+// package com.example.demo.security;
 
-import com.example.demo.entity.UserAccount;
-import com.example.demo.repository.UserAccountRepository;
-import org.springframework.security.core.userdetails.*;
-import org.springframework.stereotype.Service;
+// import com.example.demo.entity.UserAccount;
+// import com.example.demo.repository.UserAccountRepository;
+// import org.springframework.security.core.userdetails.*;
+// import org.springframework.stereotype.Service;
 
-@Service
-public class CustomUserDetailsService implements UserDetailsService {
+// @Service
+// public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserAccountRepository repository;
+//     private final UserAccountRepository repository;
 
-    public CustomUserDetailsService(UserAccountRepository repository) {
-        this.repository = repository;
-    }
+//     public CustomUserDetailsService(UserAccountRepository repository) {
+//         this.repository = repository;
+//     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+//     @Override
+//     public UserDetails loadUserByUsername(String username)
+//             throws UsernameNotFoundException {
 
-        UserAccount user = repository.findByUsername(username);
+//         UserAccount user = repository.findByUsername(username);
 
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
+//         if (user == null) {
+//             throw new UsernameNotFoundException("User not found");
+//         }
 
-        return User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .roles(user.getRole())
-                .build();
-    }
-}
+//         return User.builder()
+//                 .username(user.getUsername())
+//                 .password(user.getPassword())
+//                 .roles(user.getRole())
+//                 .build();
+//     }
+// }
