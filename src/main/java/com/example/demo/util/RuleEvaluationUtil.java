@@ -1,8 +1,11 @@
 package com.example.demo.util;
 
+import com.example.demo.entity.LoginEvent;
 import com.example.demo.repository.PolicyRuleRepository;
 import com.example.demo.repository.ViolationRecordRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RuleEvaluationUtil {
 
     private final PolicyRuleRepository policyRuleRepository;
@@ -14,5 +17,9 @@ public class RuleEvaluationUtil {
     ) {
         this.policyRuleRepository = policyRuleRepository;
         this.violationRecordRepository = violationRecordRepository;
+    }
+
+    public void evaluateLoginEvent(LoginEvent event) {
+        // no-op for now (required for compilation)
     }
 }
