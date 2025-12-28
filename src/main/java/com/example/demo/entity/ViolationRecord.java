@@ -28,7 +28,6 @@
 //     public void setResolved(Boolean resolved) { this.resolved = resolved; }
 // }
 
-
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
@@ -48,13 +47,12 @@ public class ViolationRecord {
 
     private String severity;
 
-    private String description;
+    @Column(length = 1000)
+    private String details;
 
-    private LocalDateTime createdAt;
+    private boolean resolved = false;
 
-    public ViolationRecord() {
-        this.createdAt = LocalDateTime.now();
-    }
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Long getId() {
         return id;
@@ -88,19 +86,23 @@ public class ViolationRecord {
         this.severity = severity;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDetails() {
+        return details;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public boolean isResolved() {
+        return resolved;
+    }
+
+    public void setResolved(boolean resolved) {
+        this.resolved = resolved;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }
