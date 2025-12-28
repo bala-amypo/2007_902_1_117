@@ -9,3 +9,4 @@ public interface PolicyRuleRepository {
     List<PolicyRule> findByActiveTrue();
     Optional<PolicyRule> findById(Long id);
 }
+
