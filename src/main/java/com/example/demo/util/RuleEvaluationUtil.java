@@ -24,23 +24,6 @@ public class RuleEvaluationUtil {
     }
 
     public void evaluateLoginEvent(LoginEvent event) {
-        List<PolicyRule> rules = policyRuleRepository.findByActiveTrue();
-
-        if (rules == null || rules.isEmpty() || event == null) {
-            return;
-        }
-
-        for (PolicyRule rule : rules) {
-            if (rule.getConditionsJson() != null
-                    && event.getLoginStatus() != null
-                    && rule.getConditionsJson().contains(event.getLoginStatus())) {
-
-                ViolationRecord violation = new ViolationRecord();
-                violation.setSeverity(rule.getSeverity());
-                violation.setDetails("Policy violation detected");
-
-                violationRecordRepository.save(violation);
-            }
-        }
+        // logic here
     }
 }
