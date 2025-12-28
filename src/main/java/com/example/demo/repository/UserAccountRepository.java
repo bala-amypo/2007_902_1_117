@@ -8,3 +8,4 @@ public interface UserAccountRepository {
     Optional<UserAccount> findById(Long id);
     List<UserAccount> findAll();
 }
+
