@@ -1,34 +1,17 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "login_events")
 public class LoginEvent {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long userId;
-
     private String loginStatus;
-
+    private String ipAddress;
+    private String deviceId;
+    private String location;
     private LocalDateTime timestamp;
 
-    // Constructors
-    public LoginEvent() {
-        this.timestamp = LocalDateTime.now();
-    }
-
-    public LoginEvent(Long userId, String loginStatus) {
-        this.userId = userId;
-        this.loginStatus = loginStatus;
-        this.timestamp = LocalDateTime.now();
-    }
-
-    // Getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -37,6 +20,15 @@ public class LoginEvent {
 
     public String getLoginStatus() { return loginStatus; }
     public void setLoginStatus(String loginStatus) { this.loginStatus = loginStatus; }
+
+    public String getIpAddress() { return ipAddress; }
+    public void setIpAddress(String ipAddress) { this.ipAddress = ipAddress; }
+
+    public String getDeviceId() { return deviceId; }
+    public void setDeviceId(String deviceId) { this.deviceId = deviceId; }
+
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 
     public LocalDateTime getTimestamp() { return timestamp; }
     public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
