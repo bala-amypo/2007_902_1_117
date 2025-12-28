@@ -14,10 +14,7 @@ public class LoginEventServiceImpl implements LoginEventService {
     private final LoginEventRepository loginEventRepository;
     private final RuleEvaluationUtil evaluator;
 
-    public LoginEventServiceImpl(
-            LoginEventRepository loginEventRepository,
-            RuleEvaluationUtil evaluator
-    ) {
+    public LoginEventServiceImpl(LoginEventRepository loginEventRepository, RuleEvaluationUtil evaluator) {
         this.loginEventRepository = loginEventRepository;
         this.evaluator = evaluator;
     }
@@ -25,7 +22,7 @@ public class LoginEventServiceImpl implements LoginEventService {
     @Override
     public LoginEvent recordLogin(LoginEvent event) {
         LoginEvent saved = loginEventRepository.save(event);
-        evaluator.evaluateLoginEvent(saved);
+        evaluator.evaluateLoginEvent(saved);  // optional logic
         return saved;
     }
 

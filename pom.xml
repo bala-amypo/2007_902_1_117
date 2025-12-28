@@ -62,10 +62,10 @@
             <version>2.2.0</version>
         </dependency>
 
-
+        
 <dependency>
-    <groupId>com.h2database</groupId>  <!-- or your DB -->
-    <artifactId>h2</artifactId>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
     <scope>runtime</scope>
 </dependency>
 
