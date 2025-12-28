@@ -1,16 +1,31 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "login_event")
 public class LoginEvent {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private Long userId;
+
+    @Column(nullable = false)
     private String loginStatus;
+
     private String ipAddress;
     private String deviceId;
     private String location;
+
+    @Column(nullable = false)
     private LocalDateTime timestamp;
+
+    // Required by JPA
+    public LoginEvent() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
