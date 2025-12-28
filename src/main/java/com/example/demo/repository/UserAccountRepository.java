@@ -2,7 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.entity.UserAccount;
 import java.util.*;
-@Repository
+
 public interface UserAccountRepository {
     UserAccount save(UserAccount user);
     Optional<UserAccount> findById(Long id);

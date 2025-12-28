@@ -2,7 +2,7 @@ package com.example.demo.repository;
 
 import com.example.demo.entity.PolicyRule;
 import java.util.*;
-@Repository
+
 public interface PolicyRuleRepository {
     PolicyRule save(PolicyRule rule);
     List<PolicyRule> findAll();
