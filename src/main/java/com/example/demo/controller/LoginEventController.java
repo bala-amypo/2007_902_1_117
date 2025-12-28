@@ -1,25 +1,25 @@
-// package com.example.demo.controller;
+package com.example.demo.controller;
 
-// import com.example.demo.entity.LoginEvent;
-// import com.example.demo.service.LoginEventService;
-// import org.springframework.web.bind.annotation.*;
+import com.example.demo.entity.LoginEvent;
+import com.example.demo.service.LoginEventService;
+import org.springframework.web.bind.annotation.*;
 
-// import java.util.List;
+import java.util.List;
 
-// @RestController
-// @RequestMapping("/api/login-event")
-// public class LoginEventController {
+@RestController
+@RequestMapping("/api/login-event")
+public class LoginEventController {
 
-//     private final LoginEventService loginService;
+    private final LoginEventService loginService;
 
-//     public LoginEventController(LoginEventService loginService) {
-//         this.loginService = loginService;
-//     }
+    public LoginEventController(LoginEventService loginService) {
+        this.loginService = loginService;
+    }
 
-//     @GetMapping("/user/{userId}")
-//     public List<LoginEvent> getUserLoginEvents(@PathVariable Long userId) {
-//         return loginService.getUserLoginEvents(userId);
-//     }
+    @GetMapping("/user/{userId}")
+    public List<LoginEvent> getUserLoginEvents(@PathVariable Long userId) {
+        return loginService.getUserLoginEvents(userId);
+    }
 
     
-// }
+}
