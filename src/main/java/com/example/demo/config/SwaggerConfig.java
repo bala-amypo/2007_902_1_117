@@ -50,12 +50,11 @@ public class SwaggerConfig {
                         new Server().url("https://9022.408procr.amypo.ai/")
                 ))
 
-                // 🔒 Apply security globally
+             
                 .addSecurityItem(
                         new SecurityRequirement().addList("BearerAuth")
                 )
 
-                // 🔑 Register security scheme
                 .components(
                         new Components().addSecuritySchemes(
                                 "BearerAuth", jwtScheme
