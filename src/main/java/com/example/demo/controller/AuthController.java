@@ -51,11 +51,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    // Simple login endpoint
+    
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String username,
                                         @RequestParam String password) {
-        // For now, just a dummy check
+
         if ("admin".equals(username) && "admin".equals(password)) {
             return ResponseEntity.ok("Login successful");
         } else {
@@ -64,7 +64,6 @@ public class AuthController {
         }
     }
 
-    // Simple health endpoint (Swagger can hit this)
     @GetMapping("/ping")
     public ResponseEntity<String> ping() {
         return ResponseEntity.ok("Auth service alive");
