@@ -1,9 +1,33 @@
+package com.example.demo.config;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import java.util.List;
+
+@Configuration
+public class SwaggerConfig {
+
+   @Bean
+public OpenAPI customOpenAPI() {
+    return new OpenAPI()
+        .servers(List.of(new Server().url("https://9022.408procr.amypo.ai/")));
+}
+
+}
+
+
 // package com.example.demo.config;
 
 // import io.swagger.v3.oas.models.OpenAPI;
+// import io.swagger.v3.oas.models.Components;
+// import io.swagger.v3.oas.models.security.SecurityRequirement;
+// import io.swagger.v3.oas.models.security.SecurityScheme;
 // import io.swagger.v3.oas.models.servers.Server;
 // import org.springframework.context.annotation.Bean;
 // import org.springframework.context.annotation.Configuration;
+
 // import java.util.List;
 
 // @Configuration
@@ -11,54 +35,28 @@
 
 //     @Bean
 //     public OpenAPI customOpenAPI() {
-//         return new OpenAPI()
-//                 // Make sure this matches your actual server/domain
-//                 .servers(List.of(
-//                         new Server().url("https://9022.408procr.amypo.ai/") // adjust port if needed
-//                 ));
-//     }
-// }
-
-
-package com.example.demo.config;
-
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.Components;
-import io.swagger.v3.oas.models.security.SecurityRequirement;
-import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.servers.Server;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
-
-@Configuration
-public class SwaggerConfig {
-
-    @Bean
-    public OpenAPI customOpenAPI() {
 
     
-        SecurityScheme jwtScheme = new SecurityScheme()
-                .name("Authorization")
-                .type(SecurityScheme.Type.HTTP)
-                .scheme("bearer")
-                .bearerFormat("JWT");
+//         SecurityScheme jwtScheme = new SecurityScheme()
+//                 .name("Authorization")
+//                 .type(SecurityScheme.Type.HTTP)
+//                 .scheme("bearer")
+//                 .bearerFormat("JWT");
 
-        return new OpenAPI()
-                .servers(List.of(
-                        new Server().url("https://9022.408procr.amypo.ai/")
-                ))
+//         return new OpenAPI()
+//                 .servers(List.of(
+//                         new Server().url("https://9022.408procr.amypo.ai/")
+//                 ))
 
              
-                .addSecurityItem(
-                        new SecurityRequirement().addList("BearerAuth")
-                )
+//                 .addSecurityItem(
+//                         new SecurityRequirement().addList("BearerAuth")
+//                 )
 
-                .components(
-                        new Components().addSecuritySchemes(
-                                "BearerAuth", jwtScheme
-                        )
-                );
-    }
-}
+//                 .components(
+//                         new Components().addSecuritySchemes(
+//                                 "BearerAuth", jwtScheme
+//                         )
+//                 );
+//     }
+// }
